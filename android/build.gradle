@@ -1,11 +1,3 @@
-defaultConfig {
-    applicationId "com.example.mundeuk_app"
-    minSdkVersion 20        // MODIFY
-    targetSdkVersion 30
-    versionCode flutterVersionCode.toInteger()
-    versionName flutterVersionName
-}
-
 buildscript {
     ext.kotlin_version = '1.7.10'
     repositories {

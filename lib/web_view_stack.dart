@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewStack extends StatefulWidget {
-  const WebViewStack({super.key});
+  const WebViewStack(BuildContext context, {super.key});
 
   @override
   State<WebViewStack> createState() => _WebViewStackState();
 }
 
 class _WebViewStackState extends State<WebViewStack> {
-  var loadingPercentage = 0;
   late final WebViewController controller;
+  var loadingPercentage = 0;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _WebViewStackState extends State<WebViewStack> {
         },
       ))
       ..loadRequest(
-        Uri.parse('https://mundeuk-client-p44x8pu3r-fromapril.vercel.app/home'),
+        Uri.parse('https://mundeuk.vercel.app/home'),
       );
   }
 
