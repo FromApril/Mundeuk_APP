@@ -1,71 +1,44 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:mundeuk_app/permission_view.dart';
 import 'package:mundeuk_app/web_view_stack.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (!(await permissionCheck())) {
+    exit(0);
+  }
+
+  if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
+
   runApp(
     MaterialApp(
         theme: ThemeData(useMaterial3: true),
         initialRoute: '/',
         routes: {
-          '/': (context) => const WebViewApp(),
-          '/web': (context) => WebViewStack(context),
+          '/': (context) => WebViewStack(context),
           '/permission': (context) => PermissionViewStack(context),
         }),
   );
 }
 
-class WebViewApp extends StatefulWidget {
-  const WebViewApp({super.key});
+Future<bool> permissionCheck() async {
+  final permissionList = [
+    Permission.location,
+    Permission.mediaLibrary,
+    Permission.photos,
+    Permission.notification,
+  ];
 
-  @override
-  State<WebViewApp> createState() => _WebViewAppState();
-}
+  Map<Permission, PermissionStatus> statuses = await permissionList.request();
 
-class _WebViewAppState extends State<WebViewApp> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
-        body: FutureBuilder<bool>(
-            future: permissionCheck(),
-            builder:
-                (BuildContext context, AsyncSnapshot<bool> permissionResult) {
-              if (permissionResult.data == null ||
-                  permissionResult.data == false) {
-                return ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/permission");
-                    },
-                    child: Text("권한 허용하기"));
-              } else {
-                return ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        "/web",
-                      );
-                    },
-                    child: const Text("웹 뷰 보기"));
-              }
-            }));
-  }
-
-  Future<bool> permissionCheck() async {
-    final permissionList = [
-      Permission.location,
-      Permission.mediaLibrary,
-      Permission.photos,
-      Permission.notification,
-    ];
-
-    Map<Permission, PermissionStatus> statuses = await permissionList.request();
-
-    return permissionList
-        .map((permission) => statuses[permission] == PermissionStatus.granted)
-        .reduce((acc, permission) => acc);
-  }
+  return permissionList
+      .map((permission) => statuses[permission] == PermissionStatus.granted)
+      .reduce((acc, permission) => acc);
 }
