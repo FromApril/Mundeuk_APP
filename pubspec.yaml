@@ -38,6 +38,7 @@ dependencies:
   permission_handler: ^10.3.0
   flutter_inappwebview: ^5.7.2+3
   kakao_flutter_sdk: ^1.5.0
+  supabase_flutter: ^1.10.12
 
 dev_dependencies:
   flutter_test:

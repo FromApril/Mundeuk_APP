@@ -20,6 +20,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+def KAKAO_NATIVE_APP_KEY = localProperties.getProperty('KAKAO_NATIVE_APP_KEY')
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -52,6 +53,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [KAKAO_NATIVE_APP_KEY:KAKAO_NATIVE_APP_KEY]
     }
 
     buildTypes {

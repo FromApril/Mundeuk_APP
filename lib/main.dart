@@ -8,6 +8,7 @@ import 'package:mundeuk_app/pages/login_page.dart';
 import 'package:mundeuk_app/permission_view.dart';
 import 'package:mundeuk_app/web_view_stack.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,8 @@ Future<void> main() async {
     nativeAppKey: const String.fromEnvironment("YOUR_NATIVE_APP_KEY"),
     javaScriptAppKey: const String.fromEnvironment("YOUR_JAVASCRIPT_APP_KEY"),
   );
+
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     MaterialApp(

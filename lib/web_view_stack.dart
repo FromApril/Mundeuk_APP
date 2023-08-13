@@ -97,7 +97,6 @@ class _WebViewStackState extends State<WebViewStack> {
                   setState(() {
                     this.url = url.toString();
                   });
-                  
                 },
                 onConsoleMessage: (controller, consoleMessage) {
                   print(consoleMessage);
